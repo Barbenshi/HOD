@@ -151,11 +151,7 @@ function AdminAuth() {
     setLoading(true);
     setError('');
     const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        // Only add redirectTo if running in browser (window exists)
-        ...(typeof window !== 'undefined' && { redirectTo: window.location.origin + '/' }),
-      },
+      email
     });
     if (error) setError(error.message);
     else alert('Check your email for the login link!');
