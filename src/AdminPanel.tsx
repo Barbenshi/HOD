@@ -48,10 +48,10 @@ function QuestionDialog({ open, onClose, onSave, initial }: any) {
   const handleAddOption = () => {
     setOptions([...options, { id: String.fromCharCode(97 + options.length), text: '' }]);
   };
-  const handleRemoveOption = (idx: number) => {
-    const newOptions = options.filter((_, i) => i !== idx);
+  const handleRemoveOption = (toRemoveIdx: number) => {
+    const newOptions = options.filter((_opt: any, i: number) => i !== toRemoveIdx);
     setOptions(newOptions);
-    setCorrectAnswers(correctAnswers.filter(id => id !== options[idx].id));
+    setCorrectAnswers(correctAnswers.filter(id => id !== options[toRemoveIdx].id));
   };
 
   // Correct answer selection
@@ -141,7 +141,7 @@ function QuestionDialog({ open, onClose, onSave, initial }: any) {
   );
 }
 
-function AdminAuth({ onAuth }: { onAuth: () => void }) {
+function AdminAuth() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -179,15 +179,14 @@ function AdminAuth({ onAuth }: { onAuth: () => void }) {
 
 // Define the new question structure
 export type QuestionOption = { id: string; text: string };
-export enum QuestionType {
-  MULTIPLE_CHOICE = 'MULTIPLE_CHOICE',
-  TRUE_FALSE = 'TRUE_FALSE',
-  FILL_IN_THE_BLANK = 'FILL_IN_THE_BLANK',
-  WHAT_IS_NEXT = 'WHAT_IS_NEXT',
-  SHORT_ANSWER = 'SHORT_ANSWER',
-  RISK_FACTOR = 'RISK_FACTOR',
-  YES_NO_EXPLAIN = 'YES_NO_EXPLAIN',
-}
+export type QuestionType =
+  | 'MULTIPLE_CHOICE'
+  | 'TRUE_FALSE'
+  | 'FILL_IN_THE_BLANK'
+  | 'WHAT_IS_NEXT'
+  | 'SHORT_ANSWER'
+  | 'RISK_FACTOR'
+  | 'YES_NO_EXPLAIN';
 export type Question = {
   id: string;
   casePart: number;
@@ -286,7 +285,7 @@ export default function AdminPanel() {
   };
 
   if (!authChecked) return <Box display="flex" justifyContent="center" mt={8}><CircularProgress /></Box>;
-  if (!user || user.email !== 'barbenshimol2@gmail.com') return <AdminAuth onAuth={() => setAuthChecked(false)} />;
+  if (!user || user.email !== 'barbenshimol2@gmail.com') return <AdminAuth />;
 
   if (loading) return <div>Loading...</div>;
 
