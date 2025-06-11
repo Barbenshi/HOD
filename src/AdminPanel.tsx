@@ -287,7 +287,7 @@ export default function AdminPanel() {
   };
 
   if (!authChecked) return <Box display="flex" justifyContent="center" mt={8}><CircularProgress /></Box>;
-  if (!user || user.email !== 'barbenshimol2@gmail.com') return <AdminAuth />;
+  if (!user || (user.email !== 'barbenshimol2@gmail.com' && user.email !== 'liavk1@gmail.com')) return <AdminAuth />;
 
   if (loading) return <div>Loading...</div>;
 
